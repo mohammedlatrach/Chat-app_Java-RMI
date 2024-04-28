@@ -1,8 +1,9 @@
 package server;
 
 import java.rmi.RemoteException;
-//This class implements the Chat interface
-public class RemoteChatObject implements Chat{
+import java.rmi.server.UnicastRemoteObject;
+//This class implements the Chat interface, ou ChatImpl exlpicitement
+public class ChatImpl extends UnicastRemoteObject implements Chat {
 
 	/*
 	public static void main(String[] args) {
@@ -10,8 +11,19 @@ public class RemoteChatObject implements Chat{
 	}
 	*/
 	
-	public RemoteChatObject() {
+	public ChatImpl() throws RemoteException {
 		// TODO Auto-generated constructor stub
+		super();
+	}
+	
+	
+	public String test() throws RemoteException {
+		return "Hello from Server side";
+	}
+	
+	public boolean inscription(String user_name, String password) throws RemoteException{
+		
+		return false;
 	}
 
 	@Override

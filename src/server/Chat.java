@@ -4,6 +4,10 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface Chat extends Remote {
+	
+	
+	public String test() throws RemoteException;
+	
 	public String connexion(String user_name,String password) throws RemoteException;
 	
 	public boolean deconnexion() throws RemoteException;
