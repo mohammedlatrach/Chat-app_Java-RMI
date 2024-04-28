@@ -26,20 +26,21 @@ public class ChatClient {
 		
 		while(myApp) {
 			System.out.println("Bienvenue dans le menu de l'application");
-
-			System.out.println("Pour se connecter envoyer 1");
-			System.out.println("Pour sortir cliquer envoyer 0");
+			System.out.println("Pour se connecter envoyez 1");
+			System.out.println("Pour s'inscrire cliquez envoyer 2");
 			int userAnswer = chatPrompt.nextInt();
 			
-			if(userAnswer==0) {
+			if(userAnswer==1) {
 				myApp=false;
 				break;
-			}
-			
-			if(userAnswer==1) {
+			}else
+				if(userAnswer==2) {
 				System.out.println("Bienvenue dans l'application de Chat");
 				break;
+			}else {
+				continue;
 			}
+			
 		}
 		
 		
