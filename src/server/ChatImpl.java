@@ -2,9 +2,17 @@ package server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import entities.User;
 //This class implements the Chat interface, ou ChatImpl exlpicitement
 public class ChatImpl extends UnicastRemoteObject implements Chat {
 
+	
+	
+	private ArrayList<User> registredUsers = new ArrayList<>();
+	
 	/*
 	public static void main(String[] args) {
 		System.out.print("CC");
@@ -21,9 +29,34 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 		return "Hello from Server side";
 	}
 	
-	public boolean inscription(String user_name, String password) throws RemoteException{
+	
+	public String registration(User user) throws RemoteException{
 		
-		return false;
+		String response="response";
+		
+		if(registredUsers.isEmpty()) {
+			this.registredUsers.add(user);
+			response = "Successful registration";
+			return response;
+		}
+		
+		Iterator<User> it = this.registredUsers.iterator();
+		while(it.hasNext()) {
+			User userIterator = it.next();
+			
+			// check if the user already exists
+			if(userIterator.getLogin() == user.getLogin()) {
+				System.out.println("Login not available");
+				response = "Login not available";
+				return response;
+			}else {
+				System.out.println("Successful registration");
+				this.registredUsers.add(user);
+				response =  "Successful registration";
+				return response;
+			}
+		}
+		return response;
 	}
 
 	@Override
@@ -39,12 +72,12 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 	}
 
 	@Override
-	public void envoyer(String message) throws RemoteException {
+	public void send(String message) throws RemoteException {
 		
 	}
 
 	@Override
-	public void recevoir(String message) throws RemoteException {
+	public void receive(String message) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
