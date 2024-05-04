@@ -25,7 +25,7 @@ public class Server {
 		
 		ChatImpl myRemoteChatObject = new ChatImpl();
 		
-		// register ou annuaire
+		// register ou annuaire ou catalogue ou sont publiées les objets
 		Registry register = LocateRegistry.createRegistry(1099);
 		register.rebind("remoteChatObject",myRemoteChatObject);
 		
