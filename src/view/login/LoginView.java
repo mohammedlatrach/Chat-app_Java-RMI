@@ -30,11 +30,7 @@ public class LoginView {
 	public static void main(String[] args) {
 		
 		JFrame loginViewtest = getLoginView();
-		//JTextField login = new JTextField("qsdsq");
-		//JButton btn = new JButton("sds");
-		//test.getContentPane().add(login);
-		//test.getContentPane().add(btn);
-		//test.setVisible(true);
+		
 	}	
 	
 	public static JFrame getLoginView() {
@@ -42,7 +38,7 @@ public class LoginView {
 		JFrame loginWindow = Window.getWindow();
 		Container view = loginWindow.getContentPane();
 		view.setBackground(new Color(240, 240, 240));
-		//view.setLayout(new BoxLayout(view, BoxLayout.Y_AXIS))
+		
 		
 		//;
 		JPanel inputContainer = new JPanel();
@@ -79,21 +75,8 @@ public class LoginView {
 		view.add(buttonContainer);
 		
 		
-		
-		
-		//panel.add(connexionButton);
-		//panel.add(Label.getLabel("Or"));
-		//panel.add(registerButton);
-		//panel.add(new JLabel("hee"));
-		
 		view.setLayout(new FlowLayout(FlowLayout.CENTER,0,5));
 		
-		//loginView.getContentPane().add(login);
-		//loginView.getContentPane().add(password);
-		//loginView.getContentPane().add(btn);
-		
-		//loginView.getContentPane().add(login);
-		//loginView.getContentPane().add(btn);
 		
 		loginWindow.setVisible(true);
 		return loginWindow;
