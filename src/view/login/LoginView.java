@@ -49,7 +49,11 @@ public class LoginView {
 		
 		
 		JTextField loginField = Input.getInput("textInput");
+		
+		//loginField.addActionListener(loginField);
+		
 		JTextField passwordField = Input.getInput("passwordInput");
+		
 		inputContainer.add(Label.getLabel("Login"));
 		inputContainer.add(loginField);
 		inputContainer.add(Box.createRigidArea(new Dimension(0,40)));

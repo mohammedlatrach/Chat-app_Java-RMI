@@ -3,10 +3,12 @@ package view.login;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-public class Button {
+public class Button implements ActionListener{
 
 	
 	public static JButton getButton(String buttonText) {
@@ -22,6 +24,12 @@ public class Button {
 		button.setPreferredSize(new Dimension(200, 30));
 		
 		return button;
+		
+	}
+
+	
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -11,9 +11,9 @@ public class Window {
 		window.setTitle("Chat app");
 		window.setSize(400,600);
 		window.setLocationRelativeTo(null);;
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon icon = new ImageIcon("../Chat_app/src/chat.png");
-		
+		window.setIconImage(icon.getImage());
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		return window;
 	}
 	
