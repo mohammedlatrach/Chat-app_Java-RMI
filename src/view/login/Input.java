@@ -15,53 +15,55 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class Input implements DocumentListener{
+public class Input extends InputUI implements DocumentListener{
 
-	private static String inputValue;
+	private String inputValue;
 	private JTextField input = null;
 	
 	
-	public Input(String inputType) {
+	public Input() {
 		
-		if(inputType=="passwordInput") {
-			this.input = new JPasswordField();
-		}
-		if(inputType=="textInput") {
-			this.input = new JTextField();
-		}
 		
-		this.input.setOpaque(false);
-		this.input.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY));
-		this.input.setPreferredSize(new Dimension(350, 50));
-		this.input.setFont(new Font("Courier New",Font.PLAIN,24));
 		
-		/* icon part
-		input.setLayout(new BorderLayout());
-		JLabel iconLabel = new JLabel(new ImageIcon(""));
-		input.add(iconLabel, BorderLayout.WEST);
-		*/
-		this.input.getDocument().addDocumentListener(this);
+		
+		this.getDocument().addDocumentListener(this);
 	}
 	
 	
-	@Override
+	
 	public void insertUpdate(DocumentEvent e) {
-		// TODO Auto-generated method stub
-		
+		this.setInputValue(this.getText());
+		//System.out.println("the insert text is: " +this.getText());
 	}
-	@Override
+	
 	public void removeUpdate(DocumentEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	
 	
-	@Override
+	
 	public void changedUpdate(DocumentEvent e) {
-		System.out.println("the insert event is: " + this.input.getText());
+		
 		
 	}
 	
+	
+	public JTextField getInputComponent() {
+		
+		
+		return this;
+	}
+
+
+	public String getInputValue() {
+		return this.getText();
+	}
+
+
+	public void setInputValue(String inputValue) {
+		this.inputValue = inputValue;
+	}
 
 	
 }
