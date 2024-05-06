@@ -1,5 +1,7 @@
 package server;
 
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -21,7 +23,7 @@ public class Server {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static void main(String[] args) throws RemoteException {
+	public static void main(String[] args) throws RemoteException, MalformedURLException, NotBoundException {
 		
 		ChatImpl myRemoteChatObject = new ChatImpl();
 		

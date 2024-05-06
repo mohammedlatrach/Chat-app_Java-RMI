@@ -10,7 +10,10 @@ public interface Chat extends Remote {
 	
 	public String test() throws RemoteException;
 	
-	public String connexion(String user_name,String password) throws RemoteException;
+	
+	//la connexion doit être avec session, upon validation with the auth server then send chat view
+	//old connexion public String connexion(String user_name,String password) throws RemoteException;
+	public String connexion(String sessionId) throws RemoteException;
 	
 	public boolean deconnexion() throws RemoteException;
 	

@@ -1,17 +1,23 @@
 package server;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import authentication.server.IAuthentication;
 import entities.User;
 //This class implements the Chat interface, ou ChatImpl exlpicitement
 public class ChatImpl extends UnicastRemoteObject implements Chat {
 
 	
 	
-	private ArrayList<User> registredUsers = new ArrayList<>();
+	//private ArrayList<User> registredUsers = new ArrayList<>();
+	
+	private IAuthentication authService;
 	
 	/*
 	public static void main(String[] args) {
@@ -19,9 +25,10 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 	}
 	*/
 	
-	public ChatImpl() throws RemoteException {
+	public ChatImpl() throws RemoteException, MalformedURLException, NotBoundException {
 		// TODO Auto-generated constructor stub
 		super();
+		authService = (IAuthentication)Naming.lookup("rmi://localhost/authenticationService");
 	}
 	
 	
@@ -31,7 +38,7 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 	
 	
 	public String registration(User user) throws RemoteException{
-		
+		/*
 		String response="response";
 		
 		if(registredUsers.isEmpty()) {
@@ -56,12 +63,20 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 				return response;
 			}
 		}
-		return response;
+		return response;*/
+		return "test";
 	}
 
 	@Override
-	public String connexion(String user_name, String password) throws RemoteException {
+	
+	
+	// ici je doit envoyer l'appli de chat, alr la valeur de retour doit être le type ChatApp
+	public String connexion(String sessionId) throws RemoteException {
 		
+		boolean sessionCheck = authService.validateSession(sessionId);
+		if(!sessionCheck) {
+			return null;
+		}
 		return null;
 	}
 

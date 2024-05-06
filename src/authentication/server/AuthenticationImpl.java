@@ -16,6 +16,7 @@ public class AuthenticationImpl extends UnicastRemoteObject implements IAuthenti
 	public AuthenticationImpl() throws RemoteException {
 		this.sessionManager = new SessionManager();
 		this.userCredentials = new HashMap< >();
+		userCredentials.put("med", "123");
 	}
 
 	public String authentication(String login, String password) throws RemoteException {
@@ -37,6 +38,23 @@ public class AuthenticationImpl extends UnicastRemoteObject implements IAuthenti
 		}
 		
 		return "LOGIN_NOT_AVAILABLE";
+	}
+
+
+	
+	
+	public boolean validateSession(String sessionId) {
+		String sessionVerification = sessionManager.isSessionValid(sessionId);
+		if(sessionVerification=="SESSION_VALID") {
+			return true;
+		}
+		
+		return false;
+	}
+
+
+	public void invalidateSession(String sesisonId) {
+		sessionManager.invalidateSession(sesisonId);
 	}
 
 }

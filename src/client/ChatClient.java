@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import entities.User;
 import server.Chat;
+import view.login.LoginView;
 
 public class ChatClient {
 
@@ -16,16 +17,22 @@ public class ChatClient {
 	}
 	
 	static private int  prompthingTheUser() {
+		/*
 		System.out.println("Bienvenue dans le Menu de l'application :");
 		System.out.println("----------- Pour se connecter envoyez 1");
 		System.out.println("----------- Pour s'inscrire cliquez envoyer 2");
 		Scanner chatPrompt = new Scanner(System.in);
 		return  chatPrompt.nextInt();
+		*/
+		return 1;
 	}
 
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
-		// TODO Auto-generated method stub
 		
+		
+		
+		(new LoginView()).getLoginView();
+		/*
 		Chat chatService =(Chat)Naming.lookup("rmi://localhost:1099/remoteChatObject");
 		
 		
@@ -61,7 +68,7 @@ public class ChatClient {
 			}
 			
 		}
-		
+		*/
 		
 		//System.out.println(chatService.test());
 	}
