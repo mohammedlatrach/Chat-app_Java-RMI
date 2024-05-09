@@ -55,7 +55,6 @@ public class LoginView {
 					
 					System.out.println(" Auth server response :"+response);
 					
-					// now i need to send that to Chat Server and validate it with auth server to send me chatView
 					try {
 						chatService.connexion(response);
 						loginWindow.dispose();
@@ -70,12 +69,7 @@ public class LoginView {
 			}
         });
 
-		/*
-		try {
-			
-		}catch(Exception e) {
-			System.out.print("The exception occurs in LoginView.java, Exception :"+e);
-		}*/
+		
 		
 		loginWindow.setVisible(true);
 		return loginWindow;

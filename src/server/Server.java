@@ -13,11 +13,6 @@ import entities.User;
 public class Server {
 	
 	
-	//Simulating the DataBase
-	
-	
-	
-	//ArrayList<User> connectedUsers = new ArrayList<>();
 	
 	public Server() {
 		// TODO Auto-generated constructor stub
@@ -27,8 +22,6 @@ public class Server {
 		
 		ChatImpl myRemoteChatObject = new ChatImpl();
 		
-		// register ou annuaire ou catalogue ou sont publiées les objets
-		//System.setProperty("java.rmi.server.hostname", "localhost");
 		Registry register = LocateRegistry.createRegistry(1099);
 		register.rebind("remoteChatObject",myRemoteChatObject);
 		

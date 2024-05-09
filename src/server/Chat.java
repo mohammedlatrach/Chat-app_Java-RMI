@@ -13,15 +13,14 @@ public interface Chat extends Remote {
 	public String test() throws RemoteException;
 	
 	
-	//la connexion doit être avec session, upon validation with the auth server then send chat view
-	//old connexion public String connexion(String user_name,String password) throws RemoteException;
+	//connexion must be with session, upon validation with the auth server then send chat view
 	public JFrame connexion(String sessionId) throws RemoteException;
 	
 	public boolean deconnexion() throws RemoteException;
 	
 	public String registration(User user) throws RemoteException;
 	
-	// ce message doit être de type Message pour après
+	// Must of type Message to handle Image and other content types
 	public void send(String message) throws RemoteException;
 	
 	public void receive(String message) throws RemoteException;;

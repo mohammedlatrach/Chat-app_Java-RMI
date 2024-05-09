@@ -34,13 +34,12 @@ public class ChatView {
 		chatApp.setLayout(new BoxLayout(chatApp, BoxLayout.X_AXIS));
 		
 		
-		//this is left
+		//this is left aside
 		JPanel chatHistory = new JPanel();
 		//chatHistory.setBackground(Color.RED);
 		
 		//this center
 		JPanel chatConversation = new JPanel();
-		//chatConversation.setBackground(Color.GREEN);
 		chatConversation.setLayout(new BorderLayout());
 		
 		
@@ -57,14 +56,12 @@ public class ChatView {
 		SendButton sendButton = new SendButton("Send");
 		
 		
-		//sendButton.setPreferredSize(new Dimension(50,50));
 		
 		messageInputArea.add(messageInputField);
 		messageInputArea.add(sendButton);
 		
 		
 		JPanel messagesDisplayArea = new JPanel();
-		//JScrollPane scrollPane = new JScrollPane(messagesDisplayArea);
 		
 		
 		
@@ -72,7 +69,6 @@ public class ChatView {
 		
 		chatConversation.add(messagesDisplayArea,BorderLayout.CENTER);
 		chatConversation.add(messageInputArea,BorderLayout.SOUTH);
-		//JTextField mesageInputArea = new JTextField();
 		
 		
 		
@@ -80,9 +76,8 @@ public class ChatView {
 		
 		
 		
-		//this right
+		//this right aside
 		JPanel chatInfos = new JPanel();
-		//chatInfos.setBackground(Color.BLUE);
 		
 		
 		chatApp.add(chatHistory);
