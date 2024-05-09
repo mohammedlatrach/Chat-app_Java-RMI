@@ -17,6 +17,8 @@ public class AuthenticationImpl extends UnicastRemoteObject implements IAuthenti
 		this.sessionManager = new SessionManager();
 		this.userCredentials = new HashMap< >();
 		userCredentials.put("med", "123");
+		userCredentials.put("said", "123");
+		userCredentials.put("mm", "123");
 	}
 
 	public String authentication(String login, String password) throws RemoteException {

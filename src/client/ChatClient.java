@@ -6,6 +6,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 import entities.User;
 import server.Chat;
 import view.login.LoginView;
@@ -30,8 +32,13 @@ public class ChatClient {
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 		
 		
+		try {
+			JFrame loginWindow = (new LoginView()).getLoginView();	
+		}catch(Exception e) {
+			System.out.print("The exception occurs in ChatClient.java, Exception :"+e);
+		}
 		
-		(new LoginView()).getLoginView();
+		//loginWindow.setVisible(true);
 		/*
 		Chat chatService =(Chat)Naming.lookup("rmi://localhost:1099/remoteChatObject");
 		

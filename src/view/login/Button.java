@@ -23,6 +23,10 @@ public class Button implements ActionListener{
 		button.setFont(new Font("Arial", Font.BOLD, 14));
 		button.setPreferredSize(new Dimension(200, 30));
 		
+		
+		
+		button.addActionListener(new Button());
+		
 		return button;
 		
 	}

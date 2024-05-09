@@ -9,6 +9,6 @@ public interface IAuthentication extends Remote{
 	public String registration   (String login, String password) throws RemoteException;
 	
 	//these two methods are for the chat server
-	public boolean validateSession (String sessionId);
-	public void invalidateSession (String sesisonId);
+	public boolean validateSession (String sessionId) throws RemoteException;
+	public void invalidateSession (String sesisonId) throws RemoteException;
 }

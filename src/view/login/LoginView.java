@@ -1,35 +1,22 @@
 package view.login;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.concurrent.Flow;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import authentication.server.IAuthentication;
+import server.Chat;
 import view.window.Window;
 
 public class LoginView {
-
+	
+	
 	public LoginView() {
 
 	}	
@@ -40,39 +27,42 @@ public class LoginView {
 		Container view = loginWindow.getContentPane();
 		view.setBackground(new Color(240, 240, 240));
 		
-		
 		Input loginField = new Input();	
 		Input passwordField = new Input();
-		
-		
 		
 		JButton connexionButton = Button.getButton("CONNEXION");
 		JButton registerButton = Button.getButton("REGISTER");
 			
-		
-		
 		LoginViewLayout loginViewLayout = new LoginViewLayout(loginField,Label.getLabel("Login"), passwordField,
-												Label.getLabel("Password"), connexionButton, registerButton);
+										Label.getLabel("Password"), connexionButton, registerButton);
 		loginViewLayout.getLoginViewLayout(view);
 		
 		
 		
 		//establishing connection to auth server
-		IAuthentication authService = (IAuthentication)Naming.lookup("rmi://localhost:1099/authenticationService");
+		IAuthentication authService = (IAuthentication)Naming.lookup("rmi://localhost:1098/authenticationService");
+		
+		
+		Chat chatService = (Chat)Naming.lookup("rmi://localhost:1099/remoteChatObject");
+		
 		
 		/*event dispatching*/
 		connexionButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println(loginField.getInputValue());
-				//System.out.println(passwordField.getInputValue());
 				try {
-					
 					String response  = authService.authentication(loginField.getInputValue(), passwordField.getInputValue());
 					
+					System.out.println(" Auth server response :"+response);
 					
+					// now i need to send that to Chat Server and validate it with auth server to send me chatView
+					try {
+						chatService.connexion(response);
+						loginWindow.dispose();
+					}catch(Exception ee) {
+						System.out.println("Exception "+ee);
+					}
 					
-					//System.out.println("response from auth serve : "+response);
 				} catch (RemoteException e1) {
 					
 					e1.printStackTrace();
@@ -80,7 +70,12 @@ public class LoginView {
 			}
         });
 
-		
+		/*
+		try {
+			
+		}catch(Exception e) {
+			System.out.print("The exception occurs in LoginView.java, Exception :"+e);
+		}*/
 		
 		loginWindow.setVisible(true);
 		return loginWindow;

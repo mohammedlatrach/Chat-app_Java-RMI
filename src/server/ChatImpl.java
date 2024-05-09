@@ -8,8 +8,11 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.JFrame;
+
 import authentication.server.IAuthentication;
 import entities.User;
+import view.chat.ChatView;
 //This class implements the Chat interface, ou ChatImpl exlpicitement
 public class ChatImpl extends UnicastRemoteObject implements Chat {
 
@@ -28,15 +31,34 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 	public ChatImpl() throws RemoteException, MalformedURLException, NotBoundException {
 		// TODO Auto-generated constructor stub
 		super();
-		authService = (IAuthentication)Naming.lookup("rmi://localhost/authenticationService");
+		authService = (IAuthentication)Naming.lookup("rmi://localhost:1098/authenticationService");
 	}
-	
-	
-	public String test() throws RemoteException {
-		return "Hello from Server side";
+	// ici je doit envoyer l'appli de chat, alr la valeur de retour doit être le type ChatApp
+	public JFrame connexion(String sessionId) throws RemoteException {
+		
+		boolean sessionCheck = authService.validateSession(sessionId);
+		if(!sessionCheck) {
+			return null;
+		}
+		return new ChatView().getChatView();
 	}
-	
-	
+
+	@Override
+	public boolean deconnexion() throws RemoteException {
+		
+		return false;
+	}
+
+	@Override
+	public void send(String message) throws RemoteException {
+		
+	}
+
+	@Override
+	public void receive(String message) throws RemoteException {
+		// TODO Auto-generated method stub
+		
+	}
 	public String registration(User user) throws RemoteException{
 		/*
 		String response="response";
@@ -66,35 +88,9 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 		return response;*/
 		return "test";
 	}
-
-	@Override
 	
-	
-	// ici je doit envoyer l'appli de chat, alr la valeur de retour doit être le type ChatApp
-	public String connexion(String sessionId) throws RemoteException {
-		
-		boolean sessionCheck = authService.validateSession(sessionId);
-		if(!sessionCheck) {
-			return null;
-		}
-		return null;
-	}
-
-	@Override
-	public boolean deconnexion() throws RemoteException {
-		
-		return false;
-	}
-
-	@Override
-	public void send(String message) throws RemoteException {
-		
-	}
-
-	@Override
-	public void receive(String message) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+	public String test() throws RemoteException {
+		return "Hello from Server side";
 	}
 
 }
