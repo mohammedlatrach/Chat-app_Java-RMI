@@ -6,8 +6,10 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JFrame;
 
@@ -21,6 +23,10 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 	
 	
 	private IAuthentication authService;
+	
+	//10.05.24 21:07
+	private Map<String, String> sessionUserMap = new HashMap<>();
+	
 	
 	//10.05.24 11:34
 	private List<String> messages = new ArrayList<String>(); 
@@ -38,7 +44,7 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 		if(!sessionCheck) {
 			return null;
 		}
-		return new ChatView().getChatView();
+		return new ChatView(sessionId).getChatView();
 	}
 
 	@Override

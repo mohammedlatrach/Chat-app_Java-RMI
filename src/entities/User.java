@@ -10,19 +10,19 @@ public class User implements Serializable{
 	private String  login; //email or something else, to make simple
 	private String  password;
 	
-	private String  sessionCode=null;
+	private String  sessionId=null;
 	private boolean connected;
 	
 	
 	// only login, to make it simple for User object creation in ChatClient.java
-	public User(String login) {
+	public User(String login,String password,String firstName,String lastName,String sessionId,boolean connected) {
 			this.id = 0;
-			this.firstName = "same";
-			this.lastName = "same";
+			this.firstName = firstName;
+			this.lastName = lastName;
 			this.login = login;
-			this.password = "same";
-			this.sessionCode = "same";
-			this.connected = true;
+			this.password = password;
+			this.sessionId = sessionId;
+			this.connected = connected;
 	}
 
 	public long getId() {
@@ -66,11 +66,11 @@ public class User implements Serializable{
 	}
 
 	public String getSessionCode() {
-		return sessionCode;
+		return sessionId;
 	}
 
 	public void setSessionCode(String sessionCode) {
-		this.sessionCode = sessionCode;
+		this.sessionId = sessionCode;
 	}
 
 	public boolean isConnected() {

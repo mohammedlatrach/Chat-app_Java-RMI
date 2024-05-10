@@ -33,9 +33,9 @@ public class ChatView {
 		
 		ChatView.getChatView();
 	}
-	
-	public ChatView() {
-
+	private String sessionId;
+	public ChatView(String sessionId) {
+		this.sessionId=sessionId;
 	}
 
 	public static JFrame getChatView() {
@@ -137,6 +137,9 @@ public class ChatView {
 				messageDisplayArea.add(new TextMessagesStyle(messageInputField.getText()));
 				chatWindow.revalidate();
 				chatWindow.repaint();
+				
+				//10.05.24 21:05
+				
 			}
         });
         chatConversation.add(new JScrollPane(messageDisplayArea), BorderLayout.CENTER);
