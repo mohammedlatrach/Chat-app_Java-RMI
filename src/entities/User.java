@@ -14,15 +14,11 @@ public class User implements Serializable{
 	private boolean connected;
 	
 	
-	
-	
-	
-
 	// only login, to make it simple for User object creation in ChatClient.java
 	public User(String login) {
 			this.id = 0;
 			this.firstName = "same";
-			this.lastName = "sale";
+			this.lastName = "same";
 			this.login = login;
 			this.password = "same";
 			this.sessionCode = "same";

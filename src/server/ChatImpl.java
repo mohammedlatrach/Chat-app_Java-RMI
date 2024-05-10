@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -21,10 +22,15 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 	
 	private IAuthentication authService;
 	
+	//10.05.24 11:34
+	private List<String> messages = new ArrayList<String>(); 
 	
 	public ChatImpl() throws RemoteException, MalformedURLException, NotBoundException {
 		super();
 		authService = (IAuthentication)Naming.lookup("rmi://localhost:1098/authenticationService");
+		
+		//10.05.24 11:34
+		
 	}
 	public JFrame connexion(String sessionId) throws RemoteException {
 		
