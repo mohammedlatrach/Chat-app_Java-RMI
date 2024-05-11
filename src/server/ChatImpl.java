@@ -26,17 +26,13 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 	
 	private IAuthentication authService;
 	
-	//10.05.24 21:07
 	private Map<String, String> sessionUserMap = new HashMap<>();
 	
-	//10.05.24 11:34 the user
 	private Map<User,String> userMessages = new HashMap<>(); 
 	
 	public ChatImpl() throws RemoteException, MalformedURLException, NotBoundException {
 		super();
 		this.authService = (IAuthentication)Naming.lookup("rmi://localhost:1098/authenticationService");
-		
-		//10.05.24 11:34
 		
 	}
 	public JFrame connexion(String sessionId) throws RemoteException, MalformedURLException, NotBoundException {
@@ -57,28 +53,15 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 
 	public void send(String sessionId,String message,JPanel view) throws RemoteException {
 		
-			//User user =this.authService.getUserBySessionId(sessionId);
+	
 		if(this.authService.getUserBySessionId(sessionId)!=null) {
 			User sender = this.authService.getUserBySessionId(sessionId);
 			userMessages.put(sender,message);
-			//System.out.println("Message envoyé avec succée");
-			/*
-			view.add(new TextMessagesStyle(message));
-			view.revalidate();
-			view.repaint();
-			*/
-			/*
-			for (Map.Entry<User, String> entry : userMessages.entrySet()) {
-			    User user = entry.getKey();
-			    String msg = entry.getValue();
-			    System.out.println(user.getFirstName() + " " + user.getLastName() + " : " + msg);
-			}
-			*/
+			
 			
 			return;
 		}
-			//System.out.println(" : ");
-			//System.out.println("Message non envoyé, ChatImpl.send()");
+			
 		
 	}	
 

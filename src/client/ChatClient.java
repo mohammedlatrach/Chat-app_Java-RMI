@@ -16,11 +16,6 @@ public class ChatClient {
 
 	public ChatClient() {
 	}
-	
-	static private int  prompthingTheUser() {
-	
-		return 1;
-	}
 
 	public static void main(String[] args) throws MalformedURLException, RemoteException, NotBoundException {
 		

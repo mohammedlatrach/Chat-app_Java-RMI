@@ -53,7 +53,6 @@ public class LoginView {
 				try {
 					String response  = authService.authentication(loginField.getInputValue(), passwordField.getInputValue());
 					
-					//System.out.println(" Auth server response :"+response);
 					
 					try {
 						chatService.connexion(response);

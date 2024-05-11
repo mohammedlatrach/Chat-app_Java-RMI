@@ -31,13 +31,9 @@ import view.login.Label;
 
 public class ChatView {
 	
-	// to delete upon finishing testing
 	public static void main(String[] args) {
 		
 		
-		
-		
-		//ChatView.getChatView();
 	}
 	
 	private String sessionId;
@@ -60,10 +56,9 @@ public class ChatView {
 		
 		//this is left aside
 		JPanel chatHistory = new JPanel();
-		//chatHistory.setBackground(Color.RED);
 		
 
-		//this center CHHHHHHHHHHHHHHHHHHHHHHHHHH
+		//this is center 
 		JPanel chatConversation = new JPanel();
 		chatConversation.setLayout(new BorderLayout());
 		
@@ -74,7 +69,6 @@ public class ChatView {
 		messageDisplayArea.setLayout(new BoxLayout(messageDisplayArea,  BoxLayout.Y_AXIS));
 		
 		
-		//chatConversation.setLayout(new BoxLayout(chatConversation, BoxLayout.Y_AXIS));
 		
 		
 		JPanel messageInputArea = new JPanel();
@@ -89,8 +83,6 @@ public class ChatView {
 		
 		SendButton sendButton = new SendButton("Send");
 		
-		//implementing second phase
-		
 		
 		
 		
@@ -98,13 +90,8 @@ public class ChatView {
 		messageInputArea.add(sendButton);
 		
 		
-		//JPanel messagesDisplayArea = new JPanel();
 		
 		
-		
-		
-		
-		//chatConversation.add(messagesDisplayArea,BorderLayout.CENTER);
 		chatConversation.add(messageInputArea,BorderLayout.SOUTH);
 		
 		
@@ -124,11 +111,6 @@ public class ChatView {
 		
 		
 		
-		
-		
-		
-		
-		
 		chatHistory.setPreferredSize(new Dimension(200, 200));
         chatInfos.setPreferredSize(new Dimension(200, 200));
         chatConversation.setPreferredSize(new Dimension(400, 200));
@@ -140,13 +122,6 @@ public class ChatView {
         chatHistory.setBorder(BorderFactory.createMatteBorder(0, 0 ,0 , 1, Color.GREEN));
         
         
-      
-        
-        //Chat chatService = (Chat)Naming.lookup("rmi://localhost:1099/remoteChatObject");
-        
-        
-        
-        
         
         sendButton.addActionListener(new ActionListener() {
 			@Override
@@ -154,7 +129,6 @@ public class ChatView {
 				messageDisplayArea.removeAll();
 				chatWindow.revalidate();
 				chatWindow.repaint();
-				//messageDisplayArea.add(new TextMessagesStyle(messageInputField.getText()));
 				
 				try {
 					ChatView.this.chatService.send(ChatView.this.sessionId,  messageInputField.getText(),messageDisplayArea);
@@ -168,7 +142,6 @@ public class ChatView {
 						User user = entry.getKey();
 					    String message = entry.getValue();
 					    messageDisplayArea.add(new TextMessagesStyle(user.getFirstName()+" "+user.getLastName() +" : "+message));
-					    //System.out.println(user.getFirstName()+" "+user.getLastName() +" : "+message);
 					}
 					
 						
@@ -184,18 +157,7 @@ public class ChatView {
 			}
         });
         
-        /*
-        sendButton.actionPerformed(e -> {
-            messageDisplayArea.add(new TextMessagesStyle(messageInputField.getText()));
-            chatWindow.revalidate();
-            chatWindow.repaint();
-            try {
-                chatService.send("1", messageInputField.getText());
-            } catch (RemoteException e1) {
-                e1.printStackTrace();
-            }
-        });
-        */
+      
         
         chatConversation.add(new JScrollPane(messageDisplayArea), BorderLayout.CENTER);
         
