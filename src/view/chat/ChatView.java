@@ -9,7 +9,11 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -21,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import entities.User;
+import server.Chat;
 import view.login.Label;
 
 public class ChatView {
@@ -31,14 +37,20 @@ public class ChatView {
 		
 		
 		
-		ChatView.getChatView();
+		//ChatView.getChatView();
 	}
+	
 	private String sessionId;
-	public ChatView(String sessionId) {
+	Chat chatService;
+	
+	public ChatView(String sessionId) throws MalformedURLException, RemoteException, NotBoundException {
 		this.sessionId=sessionId;
+		this.chatService = (Chat)Naming.lookup("rmi://localhost:1099/remoteChatObject");
 	}
+	
+	
 
-	public static JFrame getChatView() {
+	public JFrame getChatView() throws MalformedURLException, RemoteException, NotBoundException {
 		
 		JFrame chatWindow = ChatWindow.getChatWindow();
 		
@@ -130,18 +142,61 @@ public class ChatView {
         
       
         
+        //Chat chatService = (Chat)Naming.lookup("rmi://localhost:1099/remoteChatObject");
+        
+        
+        
+        
         
         sendButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				messageDisplayArea.add(new TextMessagesStyle(messageInputField.getText()));
+				messageDisplayArea.removeAll();
 				chatWindow.revalidate();
 				chatWindow.repaint();
+				//messageDisplayArea.add(new TextMessagesStyle(messageInputField.getText()));
 				
-				//10.05.24 21:05
+				try {
+					ChatView.this.chatService.send(ChatView.this.sessionId,  messageInputField.getText(),messageDisplayArea);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					for(Map.Entry<User, String> entry :ChatView.this.chatService.getUserMessages().entrySet()) {
+						User user = entry.getKey();
+					    String message = entry.getValue();
+					    messageDisplayArea.add(new TextMessagesStyle(user.getFirstName()+" "+user.getLastName() +" : "+message));
+					    //System.out.println(user.getFirstName()+" "+user.getLastName() +" : "+message);
+					}
+					
+						
+						
+					
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				chatWindow.revalidate();
+				chatWindow.repaint();	
 				
 			}
         });
+        
+        /*
+        sendButton.actionPerformed(e -> {
+            messageDisplayArea.add(new TextMessagesStyle(messageInputField.getText()));
+            chatWindow.revalidate();
+            chatWindow.repaint();
+            try {
+                chatService.send("1", messageInputField.getText());
+            } catch (RemoteException e1) {
+                e1.printStackTrace();
+            }
+        });
+        */
+        
         chatConversation.add(new JScrollPane(messageDisplayArea), BorderLayout.CENTER);
         
 		chatWindow.setVisible(true);
