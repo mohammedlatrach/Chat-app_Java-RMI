@@ -25,7 +25,7 @@ public interface Chat extends Remote {
 	public String registration(User user) throws RemoteException;
 	
 	// Must of type Message to handle Image and other content types
-	public void send(String sessionId,String message,JPanel view) throws RemoteException;
+	public void send(String sessionId,String message) throws RemoteException;
 	
 	public void receive(String message) throws RemoteException;
 	public Map<User, String> getUserMessages() throws RemoteException;

@@ -13,6 +13,8 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -31,9 +33,13 @@ import view.login.Label;
 
 public class ChatView {
 	
+	// to delete upon finishing testing
 	public static void main(String[] args) {
 		
 		
+		
+		
+		//ChatView.getChatView();
 	}
 	
 	private String sessionId;
@@ -56,9 +62,10 @@ public class ChatView {
 		
 		//this is left aside
 		JPanel chatHistory = new JPanel();
+		//chatHistory.setBackground(Color.RED);
 		
 
-		//this is center 
+		//this center CHHHHHHHHHHHHHHHHHHHHHHHHHH
 		JPanel chatConversation = new JPanel();
 		chatConversation.setLayout(new BorderLayout());
 		
@@ -69,6 +76,7 @@ public class ChatView {
 		messageDisplayArea.setLayout(new BoxLayout(messageDisplayArea,  BoxLayout.Y_AXIS));
 		
 		
+		//chatConversation.setLayout(new BoxLayout(chatConversation, BoxLayout.Y_AXIS));
 		
 		
 		JPanel messageInputArea = new JPanel();
@@ -83,6 +91,8 @@ public class ChatView {
 		
 		SendButton sendButton = new SendButton("Send");
 		
+		//implementing second phase
+		
 		
 		
 		
@@ -90,8 +100,13 @@ public class ChatView {
 		messageInputArea.add(sendButton);
 		
 		
+		//JPanel messagesDisplayArea = new JPanel();
 		
 		
+		
+		
+		
+		//chatConversation.add(messagesDisplayArea,BorderLayout.CENTER);
 		chatConversation.add(messageInputArea,BorderLayout.SOUTH);
 		
 		
@@ -111,6 +126,11 @@ public class ChatView {
 		
 		
 		
+		
+		
+		
+		
+		
 		chatHistory.setPreferredSize(new Dimension(200, 200));
         chatInfos.setPreferredSize(new Dimension(200, 200));
         chatConversation.setPreferredSize(new Dimension(400, 200));
@@ -122,13 +142,56 @@ public class ChatView {
         chatHistory.setBorder(BorderFactory.createMatteBorder(0, 0 ,0 , 1, Color.GREEN));
         
         
+      
+        
+        //Chat chatService = (Chat)Naming.lookup("rmi://localhost:1099/remoteChatObject");
+        
+        
+        
+        
         
         sendButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+					//messageDisplayArea.removeAll();
+					
+				try {
+					ChatView.this.chatService.send(ChatView.this.sessionId,  messageInputField.getText());
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					Map.Entry<User, String> lastMessageEntry = null;
+					//List<Map.Entry<String, String>> entryList = new ArrayList<>(userMessages.entrySet());
+					for(Map.Entry<User, String> entry :ChatView.this.chatService.getUserMessages().entrySet()) {
+						User user = entry.getKey();
+					    String message = entry.getValue();
+					    //messageDisplayArea.add(new TextMessagesStyle(user.getFirstName()+" "+user.getLastName() +" : "+message));
+					    //System.out.println(user.getFirstName()+" "+user.getLastName() +" : "+message);
+					    lastMessageEntry = entry;
+					}
+					if (lastMessageEntry != null) {
+			            User user = lastMessageEntry.getKey();
+			            String message = lastMessageEntry.getValue();
+			            messageDisplayArea.add(new TextMessagesStyle(user.getFirstName()+" "+user.getLastName() +" : "+message));
+			            System.out.println(user.getFirstName() + " " + user.getLastName() + " : " + message);
+			        }
+					chatWindow.revalidate();
+					chatWindow.repaint();
+						
+						
+					
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				/*
 				messageDisplayArea.removeAll();
 				chatWindow.revalidate();
 				chatWindow.repaint();
+				//messageDisplayArea.add(new TextMessagesStyle(messageInputField.getText()));
 				
 				try {
 					ChatView.this.chatService.send(ChatView.this.sessionId,  messageInputField.getText(),messageDisplayArea);
@@ -142,6 +205,7 @@ public class ChatView {
 						User user = entry.getKey();
 					    String message = entry.getValue();
 					    messageDisplayArea.add(new TextMessagesStyle(user.getFirstName()+" "+user.getLastName() +" : "+message));
+					    //System.out.println(user.getFirstName()+" "+user.getLastName() +" : "+message);
 					}
 					
 						
@@ -153,11 +217,22 @@ public class ChatView {
 				}
 				chatWindow.revalidate();
 				chatWindow.repaint();	
-				
+				*/
 			}
         });
         
-      
+        /*
+        sendButton.actionPerformed(e -> {
+            messageDisplayArea.add(new TextMessagesStyle(messageInputField.getText()));
+            chatWindow.revalidate();
+            chatWindow.repaint();
+            try {
+                chatService.send("1", messageInputField.getText());
+            } catch (RemoteException e1) {
+                e1.printStackTrace();
+            }
+        });
+        */
         
         chatConversation.add(new JScrollPane(messageDisplayArea), BorderLayout.CENTER);
         

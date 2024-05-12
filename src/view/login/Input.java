@@ -33,6 +33,7 @@ public class Input extends InputUI implements DocumentListener{
 	
 	public void insertUpdate(DocumentEvent e) {
 		this.setInputValue(this.getText());
+		//System.out.println("the insert text is: " +this.getText());
 	}
 	
 	public void removeUpdate(DocumentEvent e) {
