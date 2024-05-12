@@ -115,7 +115,7 @@ public class ChatView {
         userListPanel.add(new JScrollPane(userList), BorderLayout.CENTER);
         
         
-        
+        chatApp.add(new JPanel(),BorderLayout.NORTH);
         chatApp.add(scrollPane, BorderLayout.CENTER);
         chatApp.add(messageInputPanel, BorderLayout.SOUTH);
         chatApp.add(userListPanel, BorderLayout.EAST);

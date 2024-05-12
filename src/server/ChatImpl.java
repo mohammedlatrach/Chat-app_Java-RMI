@@ -108,6 +108,8 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
     }
 	
 	
-	
+	public User getUserBySessionId(String sessionId) throws RemoteException{
+		return this.authService.getUserBySessionId(sessionId);
+	}
 
 }
