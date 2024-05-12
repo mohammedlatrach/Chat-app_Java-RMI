@@ -97,7 +97,7 @@ public class ChatView {
         String message = messageInputField.getText();
         try {
             chatService.send(sessionId, message);
-            displayMessage("You: " + message);
+            //displayMessage("You: " + message);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -107,6 +107,13 @@ public class ChatView {
     private void displayMessage(String message) {
         SwingUtilities.invokeLater(() -> {
             messageDisplayArea.append(message + "\n");
+            messageDisplayArea.setCaretPosition(messageDisplayArea.getDocument().getLength());
+        });
+    }
+    
+    public void receiveMessage(User sender,String message) {
+        SwingUtilities.invokeLater(() -> {
+            messageDisplayArea.append(sender.getFirstName() + " " + sender.getLastName() + " : " +message + "\n");
             messageDisplayArea.setCaretPosition(messageDisplayArea.getDocument().getLength());
         });
     }

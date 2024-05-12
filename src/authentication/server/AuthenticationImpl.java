@@ -30,6 +30,7 @@ public class AuthenticationImpl extends UnicastRemoteObject implements IAuthenti
 		// adding some users because no registrations yet
 		users.add(new User("liberation","123","mohamed","lt",null,false));
 		users.add(new User("friend","123","said","th",null,false));
+		users.add(new User("admin","123","chat","admin",null,false));
 	}
 
 	public String authentication(String login, String password) throws RemoteException {

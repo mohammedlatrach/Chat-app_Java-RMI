@@ -29,7 +29,7 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 	
 	//10.05.24 21:07
 	private Map<String, String> sessionUserMap = new HashMap<>();
-	
+	private Map<String, ChatView> connectedClients =new HashMap<>();
 	//10.05.24 11:34 the user
 	private Map<User,String> userMessages = new LinkedHashMap<>(); 
 	
@@ -47,7 +47,11 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 			return;
 		}
 		System.out.println("session  "+sessionCheck);
-		new ChatView(sessionId);
+		ChatView chatView = new ChatView(sessionId);
+	    
+	    // Add the chatView to connectedClients map
+	    connectedClients.put(sessionId, chatView);
+		//new ChatView(sessionId);
 	}
 
 	@Override
@@ -75,7 +79,9 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 			    System.out.println(user.getFirstName() + " " + user.getLastName() + " : " + msg);
 			}
 			*/
-			
+			for (ChatView client : connectedClients.values()) {
+	            client.receiveMessage(sender,message);
+	        }
 			return;
 		}
 			//System.out.println(" : ");
