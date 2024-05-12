@@ -40,14 +40,14 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 		//10.05.24 11:34
 		
 	}
-	public JFrame connexion(String sessionId) throws RemoteException, MalformedURLException, NotBoundException {
+	public void connexion(String sessionId) throws RemoteException, MalformedURLException, NotBoundException {
 		
 		boolean sessionCheck = authService.validateSession(sessionId);
 		if(!sessionCheck) {
-			return null;
+			return;
 		}
 		System.out.println("session  "+sessionCheck);
-		return new ChatView(sessionId).getChatView();
+		new ChatView(sessionId);
 	}
 
 	@Override

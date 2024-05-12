@@ -18,7 +18,7 @@ public interface Chat extends Remote {
 	
 	
 	//connexion must be with session, upon validation with the auth server then send chat view
-	public JFrame connexion(String sessionId) throws RemoteException, MalformedURLException, NotBoundException;
+	public void connexion(String sessionId) throws RemoteException, MalformedURLException, NotBoundException;
 	
 	public boolean deconnexion() throws RemoteException;
 	

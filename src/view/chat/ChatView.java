@@ -25,7 +25,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import entities.User;
 import server.Chat;
@@ -44,202 +46,69 @@ public class ChatView {
 	
 	private String sessionId;
 	Chat chatService;
+	private JFrame chatWindow;
+    private JTextArea messageDisplayArea;
+    private JTextField messageInputField;
 	
 	public ChatView(String sessionId) throws MalformedURLException, RemoteException, NotBoundException {
 		this.sessionId=sessionId;
-		this.chatService = (Chat)Naming.lookup("rmi://localhost:1099/remoteChatObject");
+		try {
+            this.chatService = (Chat) Naming.lookup("rmi://localhost:1099/remoteChatObject");
+        } catch (MalformedURLException | RemoteException | NotBoundException e) {
+            e.printStackTrace();
+        }
+		
+		initUI();
 	}
 	
 	
+	private void initUI() {
+        chatWindow = new JFrame("Chat");
+        Container chatApp = chatWindow.getContentPane();
+        chatApp.setLayout(new BorderLayout());
 
-	public JFrame getChatView() throws MalformedURLException, RemoteException, NotBoundException {
-		
-		JFrame chatWindow = ChatWindow.getChatWindow();
-		
-		Container chatApp = chatWindow.getContentPane();
-		chatApp.setLayout(new BoxLayout(chatApp, BoxLayout.X_AXIS));
-		
-		
-		//this is left aside
-		JPanel chatHistory = new JPanel();
-		//chatHistory.setBackground(Color.RED);
-		
+        // Message display area
+        messageDisplayArea = new JTextArea(10, 40);
+        messageDisplayArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(messageDisplayArea);
 
-		//this center CHHHHHHHHHHHHHHHHHHHHHHHHHH
-		JPanel chatConversation = new JPanel();
-		chatConversation.setLayout(new BorderLayout());
-		
-		
-		
-		
-		JPanel messageDisplayArea = new JPanel();
-		messageDisplayArea.setLayout(new BoxLayout(messageDisplayArea,  BoxLayout.Y_AXIS));
-		
-		
-		//chatConversation.setLayout(new BoxLayout(chatConversation, BoxLayout.Y_AXIS));
-		
-		
-		JPanel messageInputArea = new JPanel();
-		messageInputArea.setPreferredSize(new Dimension(100, 50));
-		messageInputArea.setLayout(new BoxLayout(messageInputArea,BoxLayout.X_AXIS));
-		
-		JTextField messageInputField = new JTextField();
-		messageInputField.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
-		messageInputField.setFont(new Font("Arial",Font.PLAIN,16));
-		
-		
-		
-		SendButton sendButton = new SendButton("Send");
-		
-		//implementing second phase
-		
-		
-		
-		
-		messageInputArea.add(messageInputField);
-		messageInputArea.add(sendButton);
-		
-		
-		//JPanel messagesDisplayArea = new JPanel();
-		
-		
-		
-		
-		
-		//chatConversation.add(messagesDisplayArea,BorderLayout.CENTER);
-		chatConversation.add(messageInputArea,BorderLayout.SOUTH);
-		
-		
-		
-		
-		
-		
-		
-		//this right aside
-		JPanel chatInfos = new JPanel();
-		
-		
-		chatApp.add(chatHistory);
-		chatApp.add(chatConversation);
-		chatApp.add(chatInfos);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		chatHistory.setPreferredSize(new Dimension(200, 200));
-        chatInfos.setPreferredSize(new Dimension(200, 200));
-        chatConversation.setPreferredSize(new Dimension(400, 200));
-        
-        
-		
-        chatConversation.setBorder(BorderFactory.createMatteBorder(0, 1 ,0 , 1, Color.BLUE));
-        chatInfos.setBorder(BorderFactory.createMatteBorder(0, 1 ,0 , 0, Color.GREEN));
-        chatHistory.setBorder(BorderFactory.createMatteBorder(0, 0 ,0 , 1, Color.GREEN));
-        
-        
-      
-        
-        //Chat chatService = (Chat)Naming.lookup("rmi://localhost:1099/remoteChatObject");
-        
-        
-        
-        
-        
+        // Message input area
+        JPanel messageInputPanel = new JPanel();
+        messageInputField = new JTextField(30);
+        JButton sendButton = new JButton("Send");
         sendButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-					//messageDisplayArea.removeAll();
-					
-				try {
-					ChatView.this.chatService.send(ChatView.this.sessionId,  messageInputField.getText());
-				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				try {
-					Map.Entry<User, String> lastMessageEntry = null;
-					//List<Map.Entry<String, String>> entryList = new ArrayList<>(userMessages.entrySet());
-					for(Map.Entry<User, String> entry :ChatView.this.chatService.getUserMessages().entrySet()) {
-						User user = entry.getKey();
-					    String message = entry.getValue();
-					    //messageDisplayArea.add(new TextMessagesStyle(user.getFirstName()+" "+user.getLastName() +" : "+message));
-					    //System.out.println(user.getFirstName()+" "+user.getLastName() +" : "+message);
-					    lastMessageEntry = entry;
-					}
-					if (lastMessageEntry != null) {
-			            User user = lastMessageEntry.getKey();
-			            String message = lastMessageEntry.getValue();
-			            messageDisplayArea.add(new TextMessagesStyle(user.getFirstName()+" "+user.getLastName() +" : "+message));
-			            System.out.println(user.getFirstName() + " " + user.getLastName() + " : " + message);
-			        }
-					chatWindow.revalidate();
-					chatWindow.repaint();
-						
-						
-					
-				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				/*
-				messageDisplayArea.removeAll();
-				chatWindow.revalidate();
-				chatWindow.repaint();
-				//messageDisplayArea.add(new TextMessagesStyle(messageInputField.getText()));
-				
-				try {
-					ChatView.this.chatService.send(ChatView.this.sessionId,  messageInputField.getText(),messageDisplayArea);
-				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-				try {
-					for(Map.Entry<User, String> entry :ChatView.this.chatService.getUserMessages().entrySet()) {
-						User user = entry.getKey();
-					    String message = entry.getValue();
-					    messageDisplayArea.add(new TextMessagesStyle(user.getFirstName()+" "+user.getLastName() +" : "+message));
-					    //System.out.println(user.getFirstName()+" "+user.getLastName() +" : "+message);
-					}
-					
-						
-						
-					
-				} catch (RemoteException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				chatWindow.revalidate();
-				chatWindow.repaint();	
-				*/
-			}
-        });
-        
-        /*
-        sendButton.actionPerformed(e -> {
-            messageDisplayArea.add(new TextMessagesStyle(messageInputField.getText()));
-            chatWindow.revalidate();
-            chatWindow.repaint();
-            try {
-                chatService.send("1", messageInputField.getText());
-            } catch (RemoteException e1) {
-                e1.printStackTrace();
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendMessage();
             }
         });
-        */
-        
-        chatConversation.add(new JScrollPane(messageDisplayArea), BorderLayout.CENTER);
-        
-		chatWindow.setVisible(true);
-		
-		
-		return chatWindow;
-	}
+        messageInputPanel.add(messageInputField);
+        messageInputPanel.add(sendButton);
+
+        chatApp.add(scrollPane, BorderLayout.CENTER);
+        chatApp.add(messageInputPanel, BorderLayout.SOUTH);
+
+        chatWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        chatWindow.pack();
+        chatWindow.setVisible(true);
+    }
+
+    private void sendMessage() {
+        String message = messageInputField.getText();
+        try {
+            chatService.send(sessionId, message);
+            displayMessage("You: " + message);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        messageInputField.setText("");
+    }
+
+    private void displayMessage(String message) {
+        SwingUtilities.invokeLater(() -> {
+            messageDisplayArea.append(message + "\n");
+            messageDisplayArea.setCaretPosition(messageDisplayArea.getDocument().getLength());
+        });
+    }
 
 }
