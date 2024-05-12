@@ -67,7 +67,7 @@ public class ChatView {
 	}
 	
 	
-	private void initUI() {
+	private void initUI() throws RemoteException {
         //chatWindow = new JFrame("Chat");
 		chatWindow = new Window().getWindow();
         Container chatApp = chatWindow.getContentPane();
@@ -115,7 +115,15 @@ public class ChatView {
         userListPanel.add(new JScrollPane(userList), BorderLayout.CENTER);
         
         
-        chatApp.add(new JPanel(),BorderLayout.NORTH);
+        JPanel showUserInfo = new JPanel();
+        JLabel userLabel = new Label().getLabel("User : ");
+        JLabel userFirstName = new JLabel(chatService.getUserBySessionId(sessionId).getFirstName());
+        JLabel userLastName = new JLabel(chatService.getUserBySessionId(sessionId).getLastName());
+        JLabel userInfo = new JLabel(userLabel.getText()+userFirstName.getText()+" "+userLastName.getText());
+        showUserInfo.add(userInfo);
+        showUserInfo.setLayout(new FlowLayout(FlowLayout.LEFT));
+        
+        chatApp.add(showUserInfo,BorderLayout.NORTH);
         chatApp.add(scrollPane, BorderLayout.CENTER);
         chatApp.add(messageInputPanel, BorderLayout.SOUTH);
         chatApp.add(userListPanel, BorderLayout.EAST);
