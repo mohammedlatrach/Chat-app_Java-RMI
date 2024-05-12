@@ -29,4 +29,6 @@ public interface Chat extends Remote {
 	
 	public void receive(String message) throws RemoteException;
 	public Map<User, String> getUserMessages() throws RemoteException;
+	
+	
 }

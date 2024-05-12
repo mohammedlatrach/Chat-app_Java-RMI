@@ -106,5 +106,8 @@ public class ChatImpl extends UnicastRemoteObject implements Chat {
 	public Map<User, String> getUserMessages() throws RemoteException{
         return userMessages;
     }
+	
+	
+	
 
 }
