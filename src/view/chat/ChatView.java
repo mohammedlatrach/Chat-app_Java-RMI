@@ -112,14 +112,20 @@ public class ChatView {
         JLabel userListLabel = new Label().getLabel("Online Users:");
         userListPanel.add(userListLabel, BorderLayout.NORTH);
         userList = new JList<>();
+        
         userListPanel.add(new JScrollPane(userList), BorderLayout.CENTER);
         
         
         JPanel showUserInfo = new JPanel();
-        JLabel userLabel = new Label().getLabel("User : ");
+        JLabel userLabel = new JLabel("User : ");
+        //userLabel.setForeground(Color.BLACK);
+        
         JLabel userFirstName = new JLabel(chatService.getUserBySessionId(sessionId).getFirstName());
         JLabel userLastName = new JLabel(chatService.getUserBySessionId(sessionId).getLastName());
-        JLabel userInfo = new JLabel(userLabel.getText()+userFirstName.getText()+" "+userLastName.getText());
+        JLabel userInfo = new Label().getLabel(userLabel.getText()+userFirstName.getText()+" "+userLastName.getText());
+        userInfo.setForeground(Color.RED);
+        userInfo.setFont(new Font("Tahoma",Font.PLAIN,16));
+        
         showUserInfo.add(userInfo);
         showUserInfo.setLayout(new FlowLayout(FlowLayout.LEFT));
         
@@ -156,6 +162,13 @@ public class ChatView {
         SwingUtilities.invokeLater(() -> {
             messageDisplayArea.append(sender.getFirstName() + " " + sender.getLastName() + " : " +message + "\n");
             messageDisplayArea.setCaretPosition(messageDisplayArea.getDocument().getLength());
+        });
+    }
+    
+    
+    public void updateUserList(String[] connectedUsers) {
+    	SwingUtilities.invokeLater(() -> {
+            userList.setListData(connectedUsers);
         });
     }
 
